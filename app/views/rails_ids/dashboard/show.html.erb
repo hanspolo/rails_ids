@@ -1,0 +1,11 @@
+<h1><%= t('.dashboard') %></h1>
+
+<p>Events last hour: <%= @events.where('created_at > ?', Time.zone.now - 1.hour).count %></p>
+<p>Attacks last hour: <%= @attacks.where('created_at > ?', Time.zone.now - 1.hour).count %></p>
+
+<p>Events today: <%= @events.where('created_at > ?', Time.zone.now.beginning_of_day).count %></p>
+<p>Attacks today: <%= @attacks.where('created_at > ?', Time.zone.now.beginning_of_day).count %></p>
+
+<hr />
+<p>Events total: <%= @events.count %></p>
+<p>Attacks total: <%= @attacks.count %></p>

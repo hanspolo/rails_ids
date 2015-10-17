@@ -1,0 +1,19 @@
+<h1><%= t('.attacks') %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @attacks.each do |attack| %>
+      <tr>
+        <td><%= attack.id %></td>
+        <td><%= link_to '->', rails_ids.attack_path(attack) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
