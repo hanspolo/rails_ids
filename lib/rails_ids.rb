@@ -46,6 +46,7 @@ end
 ##
 # Monkey patching
 #
+require 'rails_ids/rails/detect'
 Dir[File.join(File.dirname(__FILE__), 'rails_ids', 'rails', '*.rb')].each do |file|
   require file
 end
