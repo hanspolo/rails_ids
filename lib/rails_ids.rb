@@ -29,8 +29,8 @@ module RailsIds
   mattr_accessor :response_function
   @@response_function = lambda do |user: nil, attack:|
     if user.present?
-      RailsIds::Responses::LockUser.run(user)
-      RailsIds::Responses::LogoutUser.run(user)
+      RailsIds::Responses::LockUser.run(user: user)
+      RailsIds::Responses::LogoutUser.run(user: user)
     else
       RailsIds::Responses::LockPage.run
     end
