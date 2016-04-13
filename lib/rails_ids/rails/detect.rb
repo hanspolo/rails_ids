@@ -14,7 +14,7 @@ module RailsIds
       # @param :sensors Array, containing all sensors, that will be used
       #
       def ids_detect_callback(sensors:, class_name: nil)
-        fail 'sensors needs to be an Array'.freeze unless sensors.is_a?(Array)
+        raise 'sensors needs to be an Array'.freeze unless sensors.is_a?(Array)
         return unless class_name.nil? || class_name == self.class.name
         user = ids_user
         identifier = ids_user_identifier

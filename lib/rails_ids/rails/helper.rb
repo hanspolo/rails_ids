@@ -65,7 +65,7 @@ module RailsIds
       # @return Attack
       #
       def ids_find_attack(user: nil, identifier: nil)
-        fail 'User or identifier required' if user.nil? && identifier.nil?
+        raise 'User or identifier required' if user.nil? && identifier.nil?
         attack = Attack.joins(:events).where(USER_OR_TOKEN_QUERY, user_id: user.try(:id), identifier: identifier).last
         unless attack
           events = ids_find_events(user: user, identifier: identifier)

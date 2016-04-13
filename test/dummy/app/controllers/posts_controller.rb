@@ -1,13 +1,13 @@
 #
 class PostsController < ApplicationController
   ids_detect only: [:index], sensors: [RailsIds::Sensors::BlacklistInputValidation,
-                                             RailsIds::Sensors::SessionIpValidation]
+                                       RailsIds::Sensors::SessionIpValidation]
   ids_detect except: [:index], sensors: [RailsIds::Sensors::DefaultInputValidation]
 
   def index
     @posts = Post.all
     ids_detect sensors: [RailsIds::Sensors::DefaultInputValidation,
-                               RailsIds::Sensors::SessionIpValidation]
+                         RailsIds::Sensors::SessionIpValidation]
   end
 
   def show

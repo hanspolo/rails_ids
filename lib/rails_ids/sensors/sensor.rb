@@ -10,7 +10,7 @@ module RailsIds
       # It should be replaced by each implementation of a sensor.
       #
       def self.run
-        fail 'Not implemented'
+        raise 'Not implemented'
       end
 
       ##

@@ -7,7 +7,7 @@ module RailsIds
     #
     class LockPage < Response
       def self.run(*)
-        fail 'You are locked out'
+        raise 'You are locked out'
       end
     end
   end

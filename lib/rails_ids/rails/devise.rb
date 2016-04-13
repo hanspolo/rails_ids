@@ -10,8 +10,8 @@ module RailsIds
 
     included do
       ids_detect only: [:create],
-                       sensors: [RailsIds::Sensors::Login],
-                       class_name: 'Devise::SessionsController'.freeze
+                 sensors: [RailsIds::Sensors::Login],
+                 class_name: 'Devise::SessionsController'.freeze
     end
   end
 end

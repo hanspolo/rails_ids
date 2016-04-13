@@ -11,7 +11,7 @@ module RailsIds
       # It should be replaced by each implementation of a response.
       #
       def self.run(user: nil)
-        fail 'Not implemented'
+        raise 'Not implemented'
       end
     end
   end

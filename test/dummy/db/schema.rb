@@ -12,34 +12,32 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20151017113005) do
-
-  create_table "posts", force: :cascade do |t|
-    t.string   "title",      null: false
-    t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'posts', force: :cascade do |t|
+    t.string   'title', null: false
+    t.text     'message'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "rails_ids_attacks", force: :cascade do |t|
-    t.string   "response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'rails_ids_attacks', force: :cascade do |t|
+    t.string   'response'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "rails_ids_events", force: :cascade do |t|
-    t.string   "event_type", null: false
-    t.string   "weight",     null: false
-    t.text     "log"
-    t.text     "headers"
-    t.text     "params"
-    t.integer  "user_id"
-    t.string   "identifier"
-    t.string   "controller"
-    t.string   "action"
-    t.string   "sensor"
-    t.integer  "attack_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'rails_ids_events', force: :cascade do |t|
+    t.string   'event_type', null: false
+    t.string   'weight',     null: false
+    t.text     'log'
+    t.text     'headers'
+    t.text     'params'
+    t.integer  'user_id'
+    t.string   'identifier'
+    t.string   'controller'
+    t.string   'action'
+    t.string   'sensor'
+    t.integer  'attack_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end

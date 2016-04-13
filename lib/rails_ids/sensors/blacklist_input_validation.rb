@@ -33,7 +33,7 @@ module RailsIds
         'suspicious' => [
           %r(../)
         ]
-      }
+      }.freeze
 
       def self.run(request, params, user = nil, identifier = nil)
         detect(SQL_INJECTION_REGEX, 'SQL_INJECTION', request, params, user, identifier)
