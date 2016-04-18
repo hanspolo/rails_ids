@@ -10,15 +10,8 @@ module RailsIds
       TYPE = 'AUTOMATICALLY_RECOGNIZED'.freeze
 
       def self.run(request, params, user = nil, identifier = nil)
-        results = MachineLearningResult.where(a: 1)
-        svm = Hml::Method::SVM.new(b: 0, w: results.map(&:w))
-        suspicious = false
-
-        params.flatten.each do |param|
-          tokens  = Hml::FeatureExtraction::BagOfWords.tokenize(params[])
-          feature = Hml::FeatureExtraction::BagOfWords.vectorize(tokens, words_vector)
-          suspicious ||= (svm.classify(feature) == 1)
-        end
+        svm = Hml::Method::SVM.new(b: 0, w: MachineLearningResult.where(a: 1).map(&:w))
+        suspicious = params.flatten.any? { |param| suspicious?(svm, param) }
 
         if suspicious
           event_detected(type: TYPE, weight: 'suspicious'.freeze,
@@ -26,6 +19,12 @@ module RailsIds
                          sensor: SENSOR, request: request, params: params,
                          user: user, identifier: identifier)
         end
+      end
+
+      def self.suspicious?(svm, str)
+        tokens  = Hml::FeatureExtraction::BagOfWords.tokenize(str)
+        feature = Hml::FeatureExtraction::BagOfWords.vectorize(tokens, words_vector)
+        svm.classify(feature) == 1
       end
 
       def self.words_vector

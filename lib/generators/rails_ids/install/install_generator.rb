@@ -11,6 +11,7 @@ module RailsIds
       desc 'add the migrations'
 
       def self.next_migration_number(_path)
+        @prev_migration_nr ||= nil
         if @prev_migration_nr
           @prev_migration_nr += 1
         else
@@ -20,10 +21,14 @@ module RailsIds
       end
 
       def copy_migrations
-        migration_template 'create_rails_ids_attacks.rb', 'db/migrate/create_rails_ids_attacks.rb'
-        migration_template 'create_rails_ids_events.rb', 'db/migrate/create_rails_ids_events.rb'
-        migration_template 'create_rails_ids_machine_learning_examples.rb', 'db/migrate/create_rails_ids_machine_learning_examples.rb'
-        migration_template 'create_rails_ids_machine_learning_results.rb', 'db/migrate/create_rails_ids_machine_learning_results.rb'
+        migration_template 'create_rails_ids_attacks.rb',
+                           'db/migrate/create_rails_ids_attacks.rb'
+        migration_template 'create_rails_ids_events.rb',
+                           'db/migrate/create_rails_ids_events.rb'
+        migration_template 'create_rails_ids_machine_learning_examples.rb',
+                           'db/migrate/create_rails_ids_machine_learning_examples.rb'
+        migration_template 'create_rails_ids_machine_learning_results.rb',
+                           'db/migrate/create_rails_ids_machine_learning_results.rb'
       end
     end
   end
