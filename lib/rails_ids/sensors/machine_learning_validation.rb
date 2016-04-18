@@ -7,6 +7,7 @@ module RailsIds
     #
     class MachineLearningValidation < Sensor
       SENSOR = 'MachineLearningValidation'.freeze
+      TYPE = 'AUTOMATICALLY_RECOGNIZED'.freeze
 
       def self.run(request, params, user = nil, identifier = nil)
         results = MachineLearningResult.where(a: 1)
@@ -20,15 +21,15 @@ module RailsIds
         end
 
         if suspicious
-          event_detected(type: , weight: 'suspicious'.freeze,
-                         log: "",
+          event_detected(type: TYPE, weight: 'suspicious'.freeze,
+                         log: '',
                          sensor: SENSOR, request: request, params: params,
                          user: user, identifier: identifier)
-       end
+        end
+      end
 
-       def self.words_vector
-         MachineLearningToken.all.map(&:token)
-       end
+      def self.words_vector
+        MachineLearningToken.active.map(&:token)
       end
     end
   end
