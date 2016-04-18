@@ -17,14 +17,10 @@ module RailsIds
 
     test 'doesn\'t complain when not changing the ip address' do
       request = ActionDispatch::Request.new('REMOTE_ADDR' => '::1')
-
-      time = Benchmark.ms do
-        100_000.times do
-          RailsIds::Sensors::SessionIpValidation.run(request, {}, nil, 'identifier')
-        end
+      10.times do
+        RailsIds::Sensors::SessionIpValidation.run(request, {}, nil, 'identifier')
       end
       assert_equal 0, Event.all.count
-      assert_operator time, :>, 100
     end
   end
 end

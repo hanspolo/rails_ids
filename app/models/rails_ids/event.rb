@@ -7,7 +7,9 @@ module RailsIds
   # and a weight, to be used by the response module, to know how to react.
   #
   class Event < ActiveRecord::Base
-    TYPES = %w(INSUFFICIANT_AUTHORIZATION LOGIN SQL_INJECTION XSS UNPRINTABLE_CHAR CSRF_TOKEN FILE_ACCESS).freeze
+    TYPES = %w(INSUFFICIANT_AUTHORIZATION LOGIN SQL_INJECTION XSS
+               UNPRINTABLE_CHAR CSRF_TOKEN FILE_ACCESS SESSION
+               AUTOMATICALLY_RECOGNIZED).freeze
     WEIGHT = %w(unsuspicious suspicious attack).freeze
 
     # Relations
