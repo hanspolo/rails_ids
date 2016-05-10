@@ -21,13 +21,14 @@ RailsIds.setup do |config|
   # config.unsuspicious_timeout = 5.minutes
 
   # How to responde to attacks
-  # response_function = lambda do |user: nil, attack:|
-  #   if user.present?
-  #     RailsIds::Responses::LockUser.run(user)
-  #     RailsIds::Responses::LogoutUser.run(user)
-  #   else
-  #     RailsIds::Responses::LockPage.run
-  #   end
-  #   attack
-  # end
+  response_function = lambda do |user: nil, attack:|
+    RailsIds::Responses::Debug.run(user: user, attack: attack)
+    if user.present?
+      RailsIds::Responses::LockUser.run(user: user)
+      RailsIds::Responses::LogoutUser.run(user: user)
+    else
+      RailsIds::Responses::LockPage.run
+    end
+    attack
+  end
 end
