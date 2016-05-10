@@ -8,3 +8,6 @@ test/dummy/tmp/
 test/dummy/.sass-cache
 *~
 #*
+
+db/migrate/*
+test/dummy/db/migrate/*_rails_ids*
