@@ -1,0 +1,6 @@
+<%= simple_form_for :example do |f| %>
+  <%= f.input :text %>
+  <%= f.input :classifier, collection: { 0 => 'attack', 1 => 'friendly' } %>
+  <%= f.input :status, collection: MachineLearningExample::STATUS %>
+  <%= f.submit %>
+<% end %>

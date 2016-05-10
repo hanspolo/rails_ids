@@ -29,6 +29,8 @@ module RailsIds
                            'db/migrate/create_rails_ids_machine_learning_examples.rb'
         migration_template 'create_rails_ids_machine_learning_results.rb',
                            'db/migrate/create_rails_ids_machine_learning_results.rb'
+        migration_template 'create_rails_ids_machine_learning_tokens.rb',
+                           'db/migrate/create_rails_ids_machine_learning_tokens.rb'
       end
     end
   end
