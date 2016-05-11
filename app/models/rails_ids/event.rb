@@ -22,5 +22,6 @@ module RailsIds
 
     # Scopes
     scope :in_time, -> (timeout) { where('created_at > ?', Time.zone.now - timeout) }
+    scope :verified, -> { where(verified: true) }
   end
 end

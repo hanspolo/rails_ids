@@ -31,6 +31,8 @@ module RailsIds
                            'db/migrate/create_rails_ids_machine_learning_results.rb'
         migration_template 'create_rails_ids_machine_learning_tokens.rb',
                            'db/migrate/create_rails_ids_machine_learning_tokens.rb'
+        migration_template 'add_match_and_verified_to_rails_ids_events.rb',
+                           'db/migrate/add_match_and_verified_to_rails_ids_events.rb'
       end
     end
   end

@@ -7,6 +7,7 @@
       <th>TYPE</th>
       <th>DATE</th>
       <th></th>
+      <th>Correct?</th>
     </tr>
   </thead>
 
@@ -16,7 +17,13 @@
         <td><%= event.id %></td>
         <td><%= event.event_type %></td>
         <td><%= event.created_at %></td>
-        <td><%= link_to '->', rails_ids.event_path(event) %>
+        <td><%= link_to '->', rails_ids.event_path(event) %></td>
+        <td>
+          <% unless event.verified? %>
+            <%= link_to 'Yes', rails_ids.verifiy_event_path(event) %> |
+            <%= link_to 'No', rails_ids.deny_event_path(event) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
