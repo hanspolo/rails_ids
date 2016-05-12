@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails',                           '~> 4.2.6'
   s.add_dependency 'simple_form',                     '~> 3.2.1'
-  s.add_dependency 'hml',                             '~> 0.0.1'
+  s.add_dependency 'rb-libsvm',                       '~> 1.4.0'
 
   s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'database_cleaner',    '~> 1.5.3'
