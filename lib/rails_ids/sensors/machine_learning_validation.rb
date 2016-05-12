@@ -1,32 +1,30 @@
-require 'rails_ids/sensors/sensor.rb'
 require 'libsvm'
 
 module RailsIds
   module Sensors
     ##
     # A implementation of an input validation sensor based on machine learning algorithms.
+    # Using rb-libsvm to classify the data.
     #
     class MachineLearningValidation < Sensor
       SENSOR = 'MachineLearningValidation'.freeze
       TYPE = 'AUTOMATICALLY_RECOGNIZED'.freeze
+      FILE = File.expand_path(File.join('tmp', 'rails_ids_svm'), Rails.env.test? ? '/' : Rails.root)
 
       ##
+      # Executes the classification on all parameters and
+      # create event if any is suspicious
       #
+      # @param request The Rails request object
+      # @param params The params from the controller
+      # @param user An optional user object
+      # @param identifier An optional identifier to recognize users without an id
       #
       def self.run(request, params, user = nil, identifier = nil)
         results =  MachineLearningResult.where(a: 1)
 
-        problem = Libsvm::Problem.new
-        parameter = Libsvm::SvmParameter.new
-
-        parameter.cache_size = 1 # in megabytes
-        parameter.eps = 0.001
-        parameter.c = 10
-
-        problem.set_examples(labels, examples)
-        svm = Libsvm::Model.train(problem, parameter)
-
-        suspicious = params.flatten.any? { |param| suspicious?(svm, param) if param.is_a? String }
+        @svm ||= Libsvm::Model.load(FILE)
+        suspicious = params.flatten.any? { |param| suspicious?(@svm, param) if param.is_a? String }
 
         if suspicious
           event_detected(type: TYPE, weight: 'suspicious'.freeze,
@@ -37,7 +35,12 @@ module RailsIds
       end
 
       ##
+      # Check if the text looks suspicious.
+      # Uses the svm classifier to decide it.
       #
+      # @param svm Libsvm::Model object, that is already trained
+      # @param str A string containing the text, that will be classified
+      # @return Boolean that returns true, if the text is classified as suspicious
       #
       def self.suspicious?(svm, str)
         tokens = BagOfWords.tokenize(str)
@@ -46,9 +49,11 @@ module RailsIds
       end
 
       ##
+      # Load all examples from the database and store the vectorized text in Libsvm::Nodes.
       #
+      # @return Array<Libsvm::Node>
       #
-      def self.examples
+      def self.features
           @examples_cache ||= MachineLearningExample.where(status: 'active').map do |ex|
             tokens = BagOfWords.tokenize(ex.text)
             vector = BagOfWords.vectorize(tokens, words_vector)
@@ -56,47 +61,56 @@ module RailsIds
           end
       end
 
+      ##
+      # Load all examples from the database and return an array of classifiers.
+      #
+      # @return Array<Object>
+      #
       def self.labels
         @labels_cache ||= MachineLearningExample.where(status: 'active').map(&:classifier)
       end
 
       ##
+      # Load all tokens from the database and return them as array.
       #
+      # @return Array<String>
       #
       def self.words_vector
         @words_vector_cache ||= MachineLearningToken.all.map(&:token)
       end
 
       ##
+      # Trains the svm classifier.
+      # Tokenizes and vectorizes all examples, stores new tokens in the database
+      # and uses them to learn.
       #
-      #
-      #
+      # @param examples List of MachineLearningExamples
       #
       def self.analyze_examples(examples)
-        # dataset = Hml::DataSet.new
         tokens_list = []
         MachineLearningResult.where(status: 'active').each { |r| r.update(status: 'old') }
-        examples.each do |ex|
-          tokens_list << BagOfWords.tokenize(ex.text)
-        end
+        data.each { |d| tokens_list << BagOfWords.tokenize(d.text) }
         tokens_list.flatten.each { |token| MachineLearningToken.find_or_create_by(token: token) }
-        # examples.each do |ex|
-        #   tokens = tokens_list.shift
-        #   values = BagOfWords.vectorize(tokens, words_vector)
-        #   # dataset << Hml::DataPoint.new(values, ex.classifier)
-        # end
-        # svm = Hml::Method::SVM.new
-        # svm.train(dataset)
-        # (0...svm.w.size).each do |i|
-        #   MachineLearningResult.create(status: 'new', a: svm.a[i], w: svm.w[i])
-        # end
-        # MachineLearningResult.where(status: 'new').each { |r| r.update(status: 'active') }
+
+        problem = Libsvm::Problem.new
+        parameter = Libsvm::SvmParameter.new
+
+        parameter.cache_size = 1 # in megabytes
+        parameter.eps = 0.001
+        parameter.c = 10
+
+        problem.set_examples(labels, features)
+        svm = Libsvm::Model.train(problem, parameter)
+        svm.save(FILE)
       end
     end # class MachineLearningValidation
 
+    ##
+    # Bag of Words is a way to get a text into a vector.
+    #
     class BagOfWords
       ##
-      #
+      # 
       #
       # @param text
       # @return Array
@@ -128,6 +142,6 @@ module RailsIds
         end
         v.values
       end
-    end
+    end # class BagOfWords
   end # module Sensors
 end # module RailsIds
