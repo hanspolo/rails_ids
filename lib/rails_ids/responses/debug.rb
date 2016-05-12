@@ -6,7 +6,7 @@ module RailsIds
     # Implementation of a response, that locks the requested page
     #
     class LockPage < Response
-      def self.run(user:, attack:)
+      def self.run(user: nil, attack:)
         return if Rails.env == 'production'
         @ids_debug = "<p>User #{user.inspect} was detected.</p>"
         attack.events.each do |event|
