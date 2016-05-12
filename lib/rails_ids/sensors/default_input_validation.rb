@@ -6,7 +6,7 @@ module RailsIds
     # Default implementation of an input validation sensor
     #
     class DefaultInputValidation < Sensor
-      def self.run(_request, _params, _user = nil, _identifier = nil)
+      def self.run(_request, _params, _user, _identifier)
       end
     end
   end

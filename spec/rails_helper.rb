@@ -1,9 +1,9 @@
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require File.expand_path('../dummy/config/environment.rb', __FILE__)
 ActiveRecord::Migration.maintain_test_schema!
 
 require 'rspec/rails'

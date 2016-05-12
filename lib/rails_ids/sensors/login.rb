@@ -11,7 +11,16 @@ module RailsIds
       SENSOR = 'Login'.freeze
       TYPE = 'LOGIN'.freeze
 
-      def self.run(_request = nil, _params = nil, _user = nil, identifier)
+      ##
+      # Executes the classification on all parameters and
+      # create event if any is suspicious
+      #
+      # @param _request Unused rails request object
+      # @param _params Unused params from the controller
+      # @param _user Unused user object
+      # @param identifier An identifier to recognize users without an id
+      #
+      def self.run(_request, _params, _user, identifier)
         event_detected(type: TYPE, weight: 'unsuspicious', sensor: SENSOR, identifier: identifier)
       end
     end

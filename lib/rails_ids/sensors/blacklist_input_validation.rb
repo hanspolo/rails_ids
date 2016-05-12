@@ -35,7 +35,7 @@ module RailsIds
         ]
       }.freeze
 
-      def self.run(request, params, user = nil, identifier = nil)
+      def self.run(request, params, user, identifier)
         detect(SQL_INJECTION_REGEX, 'SQL_INJECTION', request, params, user, identifier)
         detect(XSS_REGEX, 'XSS', request, params, user, identifier)
         detect(UNPRINTABLE_CHAR_REGEX, 'UNPRINTABLE_CHAR', request, params, user, identifier)

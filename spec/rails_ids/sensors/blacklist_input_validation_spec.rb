@@ -41,7 +41,6 @@ RSpec.describe RailsIds::Sensors::BlacklistInputValidation do
   end
 
   it 'detects unprintable chars' do
-
   end
 
   it 'detects file access' do

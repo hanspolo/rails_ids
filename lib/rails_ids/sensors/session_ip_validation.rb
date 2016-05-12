@@ -9,7 +9,7 @@ module RailsIds
       SENSOR = 'SessionIpValidation'.freeze
       TYPE = 'SESSION'.freeze
 
-      def self.run(request, _params, user = nil, identifier = nil)
+      def self.run(request, _params, user, identifier)
         remote_ip = request.remote_ip.freeze
         request.session[:rails_ids_ip_address] ||= remote_ip
         ip = request.session[:rails_ids_ip_address].freeze

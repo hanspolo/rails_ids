@@ -11,14 +11,20 @@ RSpec.describe RailsIds::Sensors::MachineLearningValidation do
 
   it 'classifies after training with the imported examples' do
     import_examples
-    RailsIds::Sensors::MachineLearningValidation.analyze_examples(RailsIds::MachineLearningExample.where(status: 'active'))
+    RailsIds::Sensors::MachineLearningValidation.analyze_examples(
+      RailsIds::MachineLearningExample.where(status: 'active')
+    )
 
     request = ActionDispatch::Request.new(nil)
-    RailsIds::Sensors::MachineLearningValidation.run(request, { text: 'This looks nice to me' }, nil, 'identifier')
+    RailsIds::Sensors::MachineLearningValidation.run(
+      request, { text: 'This looks nice to me' }, nil, 'identifier'
+    )
     expect(RailsIds::Event.all.count).to eq(0)
 
     request = ActionDispatch::Request.new(nil)
-    RailsIds::Sensors::MachineLearningValidation.run(request, { text: '<script>alert("oh oh, attack")' }, nil, 'identifier')
+    RailsIds::Sensors::MachineLearningValidation.run(
+      request, { text: '<script>alert("oh oh, attack")' }, nil, 'identifier'
+    )
     expect(RailsIds::Event.all.count).to eq(1)
   end
 end
