@@ -20,9 +20,7 @@ module RailsIds
       # @param user An optional user object
       # @param identifier An optional identifier to recognize users without an id
       #
-      def self.run(request, params, user = nil, identifier = nil)
-        results =  MachineLearningResult.where(a: 1)
-
+      def self.run(request, params, user, identifier)
         @svm ||= Libsvm::Model.load(FILE)
         suspicious = params.flatten.any? { |param| suspicious?(@svm, param) if param.is_a? String }
 
@@ -87,10 +85,7 @@ module RailsIds
       # @param examples List of MachineLearningExamples
       #
       def self.analyze_examples(examples)
-        tokens_list = []
-        MachineLearningResult.where(status: 'active').each { |r| r.update(status: 'old') }
-        examples.each { |d| tokens_list << BagOfWords.tokenize(d.text) }
-        tokens_list.flatten.each { |token| MachineLearningToken.find_or_create_by(token: token) }
+        manage_tokens(examples)
 
         problem = Libsvm::Problem.new
         parameter = Libsvm::SvmParameter.new
@@ -103,6 +98,14 @@ module RailsIds
         svm = Libsvm::Model.train(problem, parameter)
         svm.save(FILE)
       end
+
+      def self.manage_tokens(examples)
+        tokens_list = []
+        MachineLearningResult.where(status: 'active').each { |r| r.update(status: 'old') }
+        examples.each { |d| tokens_list << BagOfWords.tokenize(d.text) }
+        tokens_list.flatten.each { |token| MachineLearningToken.find_or_create_by(token: token) }
+      end
+      private_class_method :manage_tokens
     end # class MachineLearningValidation
 
     ##
@@ -117,7 +120,7 @@ module RailsIds
       #
       def self.tokenize(text)
         raise '' unless text.is_a? String
-        text.gsub!(/([^\w\s])/, ' \1 ')
+        text.gsub!(%r(([^\w\s])), ' \1 ')
         text.strip!
         text.downcase!
         text.split(' ')

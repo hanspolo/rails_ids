@@ -9,14 +9,15 @@ module RailsIds
       # Default, failing run method.
       # It should be replaced by each implementation of a sensor.
       #
-      def self.run
+      def self.run(_request, _params, _user, _identifier)
         raise 'Not implemented'
       end
 
       ##
       # An event was detected and will be written into the database.
       #
-      def self.event_detected(type:, weight:, log: nil, sensor:, params: nil, request: nil, user: nil, identifier: nil, match: nil)
+      def self.event_detected(type:, weight:, log: nil, sensor:, params: nil,
+                              request: nil, user: nil, identifier: nil, match: nil)
         Event.create! event_type: type,
                       weight: weight,
                       log: log,

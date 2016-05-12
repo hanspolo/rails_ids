@@ -6,7 +6,7 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
-    - 'test/dummy/**/*'
+    - 'spec/dummy/**/*'
     - 'lib/generators/rails_ids/install/templates/*'
     # - !ruby/regexp /old_and_unused\.rb$/
   TargetRubyVersion: 2.2
