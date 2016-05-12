@@ -20,7 +20,7 @@ module RailsIds
       # @param identifier An identifier to recognize users without an id
       #
       def self.run(_request, _params, _user, identifier)
-        event_detected(type: TYPE, weight: 'unsuspicious', dentifier: identifier)
+        event_detected(type: TYPE, weight: 'unsuspicious', identifier: identifier)
       end
     end
   end
