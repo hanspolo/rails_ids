@@ -1,3 +1,8 @@
+[![Codeship Status for hanspolo/rails_ids](https://codeship.com/projects/28d56c80-56f2-0133-a14d-1aec7b31e9a0/status?branch=master)](https://codeship.com/projects/109443)
+[![Code Climate](https://codeclimate.com/github/hanspolo/rails_ids/badges/gpa.svg)](https://codeclimate.com/github/hanspolo/rails_ids)
+[![Test Coverage](https://codeclimate.com/github/hanspolo/rails_ids/badges/coverage.svg)](https://codeclimate.com/github/hanspolo/rails_ids/coverage)
+[![Dependency Status](https://gemnasium.com/badges/github.com/hanspolo/rails_ids.svg)](https://gemnasium.com/github.com/hanspolo/rails_ids)
+
 **We assume no responsibility	for security flaws in your application!**
 
 **rails_ids is not stable yet!**
