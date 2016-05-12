@@ -9,3 +9,8 @@
 <hr />
 <p>Events total: <%= @events.count %></p>
 <p>Attacks total: <%= @attacks.count %></p>
+
+<hr />
+<p>Want to check out the events? Go to the <%= link_to 'Events page', events_path %></p>
+<p>Or do you want to see recognized attacks? Go to the <%= link_to 'Attacks page', attacks_path %></p>
+<p>Using the machine learning sensor? Check out the <%= link_to 'Examples', machine_learning_examples_path %> the algorithms are based on</p>

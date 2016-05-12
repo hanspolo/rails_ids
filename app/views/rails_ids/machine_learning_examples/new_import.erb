@@ -1,0 +1,7 @@
+<h1><%= t('.new_import') %></h1>
+
+<%= form_tag import_machine_learning_examples_path, method: "post" do %>
+  <%= label_tag(:import, "Content:") %>
+  <%= text_area_tag(:import) %>
+  <%= submit_tag("Import") %>
+<% end %>

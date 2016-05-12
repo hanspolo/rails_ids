@@ -6,6 +6,8 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
+    - 'test/dummy/**/*'
+    - 'lib/generators/rails_ids/install/templates/*'
     # - !ruby/regexp /old_and_unused\.rb$/
   TargetRubyVersion: 2.2
 
@@ -18,3 +20,6 @@ Style/RegexpLiteral:
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     '%r': ()
+
+Rails:
+  Enabled: true

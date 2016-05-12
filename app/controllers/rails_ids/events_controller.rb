@@ -6,13 +6,29 @@ module RailsIds
   # Read log and more information about a single event.
   #
   class EventsController < ApplicationController
-    before_action :load_event, only: [:show]
+    before_action :load_event, only: [:show, :verify, :deny]
 
     def index
       @events = Event.all
     end
 
     def show
+    end
+
+    def verify
+      if @event.sensor == 'BlacklistInputValidation'
+        MachineLearningExample.create!(text: @event.match, classifier: 0, status: 'active')
+      end
+      @event.update(verified: true)
+      redirect_to :back
+    end
+
+    def deny
+      if @event.sensor == 'BlacklistInputValidation'
+        MachineLearningExample.create!(text: @event.match, classifier: 0, status: 'active')
+      end
+      @event.destroy!
+      redirect_to :back
     end
 
     private

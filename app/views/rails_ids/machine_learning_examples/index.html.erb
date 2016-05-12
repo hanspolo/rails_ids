@@ -1,0 +1,30 @@
+<h1><%= t('.examples') %></h1>
+
+<%= link_to 'Import', new_import_machine_learning_examples_path %>
+<%= link_to 'New', new_machine_learning_example_path %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>TEXT</th>
+      <th>CLASSIFIER</th>
+      <th>STATUS</th>
+      <th>DATE</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @examples.each do |example| %>
+      <tr>
+        <td><%= example.id %></td>
+        <td><%= example.text %></td>
+        <td><%= example.classifier %></td>
+        <td><%= example.status %></td>
+        <td><%= example.created_at %></td>
+        <td><%= link_to '->', rails_ids.edit_machine_learning_example_path(example) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

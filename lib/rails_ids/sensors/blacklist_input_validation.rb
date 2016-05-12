@@ -48,13 +48,17 @@ module RailsIds
             next if not_matching?(params, r)
             event_detected(type: type, weight: weight, log: "found #{r}",
                            sensor: SENSOR, request: request, params: params,
-                           user: user, identifier: identifier)
+                           user: user, identifier: identifier, match: match(params, r))
           end
         end
       end
 
       def self.not_matching?(params, regex)
         params.flatten.none? { |p| p =~ regex }
+      end
+
+      def self.match(params, regex)
+        params.flatten.find { |p| p =~ regex }
       end
     end
   end
