@@ -8,7 +8,6 @@ module RailsIds
     # Multiple failing logins in a short time may be an brute forcing attack.
     #
     class Login < Sensor
-      SENSOR = 'Login'.freeze
       TYPE = 'LOGIN'.freeze
 
       ##
@@ -21,7 +20,7 @@ module RailsIds
       # @param identifier An identifier to recognize users without an id
       #
       def self.run(_request, _params, _user, identifier)
-        event_detected(type: TYPE, weight: 'unsuspicious', sensor: SENSOR, identifier: identifier)
+        event_detected(type: TYPE, weight: 'unsuspicious', dentifier: identifier)
       end
     end
   end

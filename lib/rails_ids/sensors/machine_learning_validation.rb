@@ -7,7 +7,6 @@ module RailsIds
     # Using rb-libsvm to classify the data.
     #
     class MachineLearningValidation < Sensor
-      SENSOR = 'MachineLearningValidation'.freeze
       TYPE = 'AUTOMATICALLY_RECOGNIZED'.freeze
       FILE = File.expand_path(File.join('tmp', 'rails_ids_svm'), Rails.env.test? ? '/' : Rails.root)
 
@@ -26,8 +25,7 @@ module RailsIds
 
         if suspicious
           event_detected(type: TYPE, weight: 'suspicious'.freeze,
-                         log: '',
-                         sensor: SENSOR, request: request, params: params,
+                         log: '', request: request, params: params,
                          user: user, identifier: identifier)
         end
       end

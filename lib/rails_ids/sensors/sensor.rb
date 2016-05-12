@@ -16,7 +16,7 @@ module RailsIds
       ##
       # An event was detected and will be written into the database.
       #
-      def self.event_detected(type:, weight:, log: nil, sensor:, params: nil,
+      def self.event_detected(type:, weight:, log: nil, params: nil,
                               request: nil, user: nil, identifier: nil, match: nil)
         Event.create! event_type: type,
                       weight: weight,
@@ -27,7 +27,7 @@ module RailsIds
                       identifier: identifier,
                       controller: params.try(:[], :controller),
                       action: params.try(:[], :action),
-                      sensor: sensor,
+                      sensor: name.demodulize.freeze,
                       match: match
       end
     end

@@ -6,7 +6,6 @@ module RailsIds
     # A implementation of an input validation sensor that blacklists some input.
     #
     class BlacklistInputValidation < Sensor
-      SENSOR = 'BlacklistInputValidation'.freeze
       SQL_INJECTION_REGEX = {
         'suspicious' => [
           %r(';)
@@ -47,7 +46,7 @@ module RailsIds
           rs.each do |r|
             next if not_matching?(params, r)
             event_detected(type: type, weight: weight, log: "found #{r}",
-                           sensor: SENSOR, request: request, params: params,
+                           request: request, params: params,
                            user: user, identifier: identifier, match: match(params, r))
           end
         end
