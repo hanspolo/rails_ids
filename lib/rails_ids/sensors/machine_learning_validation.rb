@@ -89,7 +89,7 @@ module RailsIds
       def self.analyze_examples(examples)
         tokens_list = []
         MachineLearningResult.where(status: 'active').each { |r| r.update(status: 'old') }
-        data.each { |d| tokens_list << BagOfWords.tokenize(d.text) }
+        examples.each { |d| tokens_list << BagOfWords.tokenize(d.text) }
         tokens_list.flatten.each { |token| MachineLearningToken.find_or_create_by(token: token) }
 
         problem = Libsvm::Problem.new
@@ -110,7 +110,7 @@ module RailsIds
     #
     class BagOfWords
       ##
-      # 
+      #
       #
       # @param text
       # @return Array
