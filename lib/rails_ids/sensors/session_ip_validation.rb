@@ -6,7 +6,6 @@ module RailsIds
     # A implementation of an input validation sensor that blacklists some input.
     #
     class SessionIpValidation < Sensor
-      SENSOR = 'SessionIpValidation'.freeze
       TYPE = 'SESSION'.freeze
 
       def self.run(request, _params, user, identifier)
@@ -16,7 +15,7 @@ module RailsIds
         if ip != remote_ip
           event_detected(type: TYPE, weight: 'suspicious'.freeze,
                          log: "ip address changed from #{ip} #{remote_ip}",
-                         sensor: SENSOR, request: nil, params: nil,
+                         request: nil, params: nil,
                          user: user, identifier: identifier)
         end
       end

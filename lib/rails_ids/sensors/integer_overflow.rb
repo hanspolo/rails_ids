@@ -6,11 +6,10 @@ module RailsIds
     #
     #
     class IntegerOverflow < Sensor
-      SENSOR = 'Integer Overflow'.freeze
       TYPE = 'OVERFLOW'.freeze
 
       def self.run(_request, _params, _user, identifier)
-        event_detected(type: TYPE, weight: 'unsuspicious', sensor: SENSOR, identifier: identifier)
+        event_detected(type: TYPE, weight: 'unsuspicious', identifier: identifier)
       end
     end
   end
