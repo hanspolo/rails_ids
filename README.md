@@ -101,12 +101,12 @@ See [available responses](#available-responses) and [write your own responses](#
 ## Available sensors
 
 ## Write your own sensors
-More theory about responses in the [wiki](/wiki/Sensors)
+More theory about responses in the [wiki](https://github.com/hanspolo/rails_ids/wiki/Sensors)
 
 ## Available responses
 
 ## Write your own responses
-More theory about responses in the [wiki](/wiki/Responses)
+More theory about responses in the [wiki](https://github.com/hanspolo/rails_ids/wiki/Responses)
 
 # Additional
 ## Contribution
