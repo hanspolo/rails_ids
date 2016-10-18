@@ -40,6 +40,13 @@ module RailsIds
         values.each { |v| values.delete_at(values.index(v)) && values << params_values(v) if v.is_a?(Hash) }
         values.flatten
       end
+
+      def self.cleaned_params(params)
+        v = params.dup
+        v.delete('utf8')
+        v.delete('authenticity_token')
+        v
+      end
     end
   end
 end
