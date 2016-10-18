@@ -19,7 +19,11 @@ module RailsIds
     def create
       @example = MachineLearningExample.new(example_params)
       if @example.save
+        flash[:notice] = t('.success')
+        redirect_to machine_learning_examples_path
       else
+        flash[:notice] = t('.failure')
+        render :new
       end
     end
 
@@ -28,7 +32,11 @@ module RailsIds
 
     def update
       if @example.update(example_params)
+        flash[:notice] = t('.success')
+        redirect_to machine_learning_examples_path
       else
+        flash[:notice] = t('.failure')
+        render :edit
       end
     end
 
