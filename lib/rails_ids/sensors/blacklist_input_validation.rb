@@ -35,10 +35,11 @@ module RailsIds
       }.freeze
 
       def self.run(request, params, user, identifier)
-        detect(SQL_INJECTION_REGEX, 'SQL_INJECTION', request, params, user, identifier)
-        detect(XSS_REGEX, 'XSS', request, params, user, identifier)
-        detect(UNPRINTABLE_CHAR_REGEX, 'UNPRINTABLE_CHAR', request, params, user, identifier)
-        detect(FILE_ACCESS_REGEX, 'FILE_ACCESS', request, params, user, identifier)
+        v = cleaned_params(params)
+        detect(SQL_INJECTION_REGEX, 'SQL_INJECTION', request, v, user, identifier)
+        detect(XSS_REGEX, 'XSS', request, v, user, identifier)
+        detect(UNPRINTABLE_CHAR_REGEX, 'UNPRINTABLE_CHAR', request, v, user, identifier)
+        detect(FILE_ACCESS_REGEX, 'FILE_ACCESS', request, v, user, identifier)
       end
 
       def self.detect(checks, type, request, params, user = nil, identifier = nil)
@@ -53,11 +54,20 @@ module RailsIds
       end
 
       def self.not_matching?(params, regex)
-        params.flatten.none? { |p| p =~ regex }
+        params.to_s =~ regex ? false : true
       end
 
       def self.match(params, regex)
         params.flatten.find { |p| p =~ regex }
+      end
+
+      private
+
+      def self.cleaned_params(params)
+        v = params.dup
+        v.delete('utf8')
+        v.delete('authenticity_token')
+        v
       end
     end
   end
