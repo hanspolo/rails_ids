@@ -58,16 +58,7 @@ module RailsIds
       end
 
       def self.match(params, regex)
-        params.flatten.find { |p| p =~ regex }
-      end
-
-      private
-
-      def self.cleaned_params(params)
-        v = params.dup
-        v.delete('utf8')
-        v.delete('authenticity_token')
-        v
+        params_values(params).find { |v| v =~ regex }
       end
     end
   end

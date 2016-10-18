@@ -30,6 +30,16 @@ module RailsIds
                       sensor: name.demodulize.freeze,
                       match: match
       end
+
+      protected
+
+      # params.flatten doesn't work
+      # this method will return all values of a hash
+      def self.params_values(params)
+        values = params.values
+        values.each { |v| values.delete_at(values.index(v)) && values << params_values(v) if v.is_a?(Hash) }
+        values.flatten
+      end
     end
   end
 end
