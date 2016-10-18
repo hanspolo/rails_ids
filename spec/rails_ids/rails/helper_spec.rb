@@ -23,6 +23,15 @@ RSpec.describe RailsIds::Analyzer do
   ###############
   # ids_respond #
   ###############
+  it 'calls the global response_function' do
+    RailsIds.response_function = lambda do |user: nil, attack:|
+      'response'
+    end
+
+    response = ActionController::Base.new.ids_respond(attack: nil)
+
+    expect(response).to eql('response')
+  end
 
   ###################
   # ids_find_attack #
